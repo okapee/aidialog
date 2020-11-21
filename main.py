@@ -1,5 +1,6 @@
 from flask import Flask, request, abort
 import os
+import datetime
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -19,9 +20,9 @@ line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
-@app.route("/")
-def hello_world():
-    return "hello world!"
+# @app.route("/")
+# def hello_world():
+#     return "hello world!"
 
 
 @app.route("/callback", methods=["POST"])
@@ -31,6 +32,7 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
+    print(datetime.now().strftime("%Y/%m/%d %H:%M:%S"), "Request body: " + body)
     app.logger.info("Request body: " + body)
 
     # handle webhook body

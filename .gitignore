@@ -3,3 +3,7 @@
 
 # btsjcorpusフォルダを無視する
 /btsjcorpus_ver2020/
+
+# 他、ファイルを無視する
+Procfile
+runtime.txt

@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import os
 import datetime
+
 # from __future__ import print_function
 # from keras.callbacks import LambdaCallback
 # from keras.models import Sequential
@@ -14,17 +15,16 @@ from dialog_generate import generate
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import (
-    MessageEvent,
-    TextMessage,
-    TextSendMessage,
-)
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 app = Flask(__name__)
 
 # 環境変数取得
-YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+# YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
+# YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+
+YOUR_CHANNEL_ACCESS_TOKEN = "Xvfv904iY8pzJJEEfaXhwz+IkTN4L9Bct/RgYiL3MZJ7nvC40PcmjDfOYHsvmxVUzKpJ97H/K38N2Ncd5DXPZYfFFeuOBy7+DQNnFJkyV744BPosXKs2zjGJgY2nXPjEoM1VlfODRDlvhpo0L8IIngdB04t89/1O/w1cDnyilFU="
+YOUR_CHANNEL_SECRET = "f2aa46d3314b962079f34b9199f3fe49"
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
@@ -57,9 +57,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(text=result)
-    )
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
 
 
 if __name__ == "__main__":

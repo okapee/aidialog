@@ -1,8 +1,10 @@
 import random
 import sys
 import io
+from keras.engine.saving import load_weights_from_hdf5_group
 import numpy as np
-from tensorflow.keras.models import load_model
+from keras.models import load_model
+from keras.models import model_from_json
 
 
 # 初期化処理とモデルの読み込み
@@ -34,7 +36,12 @@ for i, sentence in enumerate(sentences):
         x[i, t, char_indices[char]] = 1
     y[i, char_indices[next_chars[i]]] = 1
 
-model = load_model("dialog_model.h5")
+
+# modelの読み込み
+model = open("dialog_model.json").read()
+model = model_from_json(model)
+# model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+model = model.load_weights("dialog_model.h5")
 
 
 def generate():

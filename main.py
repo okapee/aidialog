@@ -1,6 +1,16 @@
 from flask import Flask, request, abort
 import os
 import datetime
+# from __future__ import print_function
+# from keras.callbacks import LambdaCallback
+# from keras.models import Sequential
+# from keras.layers import Dense, Activation
+# from keras.layers import LSTM
+# from keras.optimizers import RMSprop
+# from keras.utils.data_utils import get_file
+# import numpy as np
+
+from dialog_generate import generate
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -19,10 +29,7 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-
-# @app.route("/")
-# def hello_world():
-#     return "hello world!"
+result = ""
 
 
 @app.route("/callback", methods=["POST"])
@@ -32,8 +39,12 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    print(datetime.now().strftime("%Y/%m/%d %H:%M:%S"), "Request body: " + body)
-    app.logger.info("Request body: " + body)
+    # print(datetime.now().strftime("%Y/%m/%d %H:%M:%S"), "Request body: " + body)
+    # app.logger.info("Request body: " + body)
+
+    # dialog_generate.pyのXXX関数を実行
+    result = ""
+    result = generate()
 
     # handle webhook body
     try:
@@ -47,7 +58,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(text=event.message.text)
+        event.reply_token, TextSendMessage(text=result)
     )
 
 

@@ -1,21 +1,12 @@
 import random
 import sys
 import io
-import json
-from keras.engine.saving import load_weights_from_hdf5_group
 import numpy as np
 import tensorflow as tf
 
 # from keras.models import load_weights
-from keras.backend import clear_session
 from keras.models import load_model
 from keras.models import model_from_json
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-from keras.layers import LSTM
-from keras.optimizers import RMSprop
-from keras.utils.data_utils import get_file
-
 
 global graph
 

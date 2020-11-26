@@ -1,8 +1,7 @@
 from flask import Flask, request, abort
 import os
 import json
-import datetime
-from keras.backend import clear_session
+from datetime import datetime
 
 # from __future__ import print_function
 # from keras.callbacks import LambdaCallback
@@ -14,6 +13,7 @@ from keras.backend import clear_session
 # import numpy as np
 
 from dialog_generate import generate
+from richmenu import createRichmenu
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -32,50 +32,37 @@ line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 result = ""
-# global result
 
 
 @app.route("/callback", methods=["POST"])
 def callback():
-    # clear_session()
+    global result
     # get X-Line-Signature header value
     signature = request.headers["X-Line-Signature"]
 
     # get request body as text
     body = request.get_data(as_text=True)
-    # print(datetime.now().strftime("%Y/%m/%d %H:%M:%S"), "Request body: " + body)
-    # app.logger.info("Request body: " + body)
+    print(datetime.now().strftime("%Y/%m/%d %H:%M:%S"), "Request body: " + str(body))
+    print(
+        datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
+        "Request body type: " + str(type(body)),
+    )
+    app.logger.info("Request body: " + body)
 
-    # dialog_generate.pyのXXX関数を実行
-    global result
-    result = generate()
-    print("result" + result)
-    print("body: " + body)
+    if "文章生成モード" in body:
+        print("文章生成モード")
 
-    # message_event = json.loads(event["body"])["events"][0]
-    # reply_token = message_event["replyToken"]
-    # # message_text = message_event['message']['text']
-    # message_text = result
+        result = generate()
+    elif "対話モード" in body:
+        print("対話モード")
 
-    # requests.post(
-    #     "https://api.line.me/v2/bot/message/reply",
-    #     data=json.dumps(
-    #         {
-    #             "replyToken": reply_token,
-    #             "messages": [{"type": "text", "text": message_text.upper()}],
-    #         }
-    #     ),
-    #     headers={
-    #         # TODO: Put your channel access token in the Authorization header
-    #         "Authorization": "Bearer YOUR_CHANNEL_ACCESS_TOKEN_HERE",
-    #         "Content-Type": "application/json",
-    #     },
-    # )
+        result = "対話モードはまだないよ…　もう少し待ってね！"
 
-    # body["events"]["message"]["text"] = result
-    # body.events.message.text = result
-    # print('body["events"]["message"]["text"]:' + body["events"]["message"]["text"])
-    # handle webhook body
+    # json_load = json.load(request)
+    # print("json_load: " + str(json_load))
+
+    # dialog_generate.pyのgenerate関数を実行
+
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:

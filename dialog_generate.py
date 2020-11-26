@@ -1,11 +1,25 @@
 import random
 import sys
 import io
+import json
 from keras.engine.saving import load_weights_from_hdf5_group
 import numpy as np
+import tensorflow as tf
+
+# from keras.models import load_weights
+from keras.backend import clear_session
 from keras.models import load_model
 from keras.models import model_from_json
+from keras.models import Sequential
+from keras.layers import Dense, Activation
+from keras.layers import LSTM
+from keras.optimizers import RMSprop
+from keras.utils.data_utils import get_file
 
+
+global graph
+
+# clear_session()
 
 # 初期化処理とモデルの読み込み
 path = "./dialog.txt"
@@ -38,10 +52,22 @@ for i, sentence in enumerate(sentences):
 
 
 # modelの読み込み
-model = open("dialog_model.json").read()
-model = model_from_json(model)
-# model.compile(loss='categorical_crossentropy', optimizer=optimizer)
-model = model.load_weights("dialog_model.h5")
+# model = model_from_json(json.dumps("dialog_model.json"))
+
+with open("dialog_model.json", "r") as json_file:
+    model = model_from_json(json_file.read())
+# model = load_weights("dialog_model.h5", compile=False)
+model = load_model("dialog_model.h5")
+model.summary()
+graph = tf.get_default_graph()
+
+# model = open("dialog_model.json").read()
+# model = model_from_json(model)
+# # model = model_from_json(model)
+# # model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+# model.load_weights("dialog_model.h5")
+# optimizer = RMSprop(lr=0.01)
+# model.compile(loss="categorical_crossentropy", optimizer=optimizer)
 
 
 def generate():
@@ -61,7 +87,8 @@ def generate():
             for t, char in enumerate(sentence):
                 x_pred[0, t, char_indices[char]] = 1.0
 
-            preds = model.predict(x_pred, verbose=0)[0]
+            with graph.as_default():
+                preds = model.predict(x_pred, verbose=0)[0]
             next_index = sample(preds, diversity)
             next_char = indices_char[next_index]
 

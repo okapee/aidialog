@@ -12,8 +12,7 @@ from datetime import datetime
 # from keras.utils.data_utils import get_file
 # import numpy as np
 
-from dialog_generate import generate
-from richmenu import createRichmenu
+from dialog_generate_by_char import generate
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError

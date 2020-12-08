@@ -13,8 +13,8 @@ global graph
 # clear_session()
 
 # 初期化処理とモデルの読み込み
-path = "./dialog.txt"
-with io.open(path) as f:
+path = "./dialog(1file).txt"
+with io.open(path, encoding="utf-8") as f:
     text = f.read().lower()
 print("corpus length:", len(text))
 

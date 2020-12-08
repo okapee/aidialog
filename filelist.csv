@@ -1,0 +1,23 @@
+主要なファイル／フォルダ,説明
+btsjcorpus_ver2020,コーパス（前処理前）を格納するフォルダ
+BTSJ日本語自然会話コーパスをインプットとした文章生成.ipynb,文字単位の文章生成を行う一連の処理の動作確認用
+BTSJ日本語自然会話コーパスをインプットとした文章生成_by_word(one-hot).ipynb,単語単位の文章生成を行う一連の処理の動作確認用（入力はOne-hot表現）
+BTSJ日本語自然会話コーパスをインプットとした文章生成_by_word2vec.ipynb,単語単位の文章生成を行う一連の処理の動作確認用（入力はWord2Vec）
+corpus.vec.pt,コーパスをWord2Vecで学習した学習済みモデル
+dialog(1file).txt,コーパスの1ファイルのみを抜粋したファイル
+dialog(full).txt,全コーパスファイルを1ファイルに結合したもの
+dialog_generate_by_char.py,文字単位で文章を生成する処理ロジック
+dialog_generate_by_word2vec.py,単語単位で文章を生成する処理ロジック（入力はWord2Vec）
+dialog_generate_by_word_onehot.py,単語単位で文章を生成する処理ロジック（入力はOne-hot表現）
+dialog_mini.txt,コーパスの全サイズの1/5程度を抜粋したファイル
+dialog_model.h5,文字単位で文章を生成するモデル（重み、アーキテクチャ、訓練の設定などを保存）
+dialog_model.json,文字単位で文章を生成するモデル（アーキテクチャのみ保存）
+dialog_model_by_word2vec.h5,単語単位で文章を生成するモデル（入力はWord2Vecで、重み、アーキテクチャ、訓練の設定などを保存）
+dialog_model_by_word2vec.json,単語単位で文章を生成するモデル（入力はWord2Vecで、アーキテクチャのみ保存）
+dialog_model_by_word_onehot.h5,単語単位で文章を生成するモデル（入力はOne-hot表現で、重み、アーキテクチャ、訓練の設定などを保存）
+dialog_model_by_word_onehot.json,単語単位で文章を生成するモデル（入力はOne-hot表現で、アーキテクチャのみ保存）
+filelist.csv,本ファイル
+main.py,エントリポイントとなる実装（LINEと Message APIサーバとのIF）
+Procfile,Herokuでアプリのエントリポイントと動作モードを指定する際に使用
+requirements.txt,Herokuで必要なライブラリを一括インストールする際に使用
+runtime.txt,Herokuでラインタイムの指定をする際に使用
